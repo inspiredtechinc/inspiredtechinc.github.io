@@ -14,9 +14,6 @@ on:
   pull_request:
     branches:
       - gh-pages
-      - main
-      - new-website
-      - '**'
   push:
     branches:
       - gh-pages
