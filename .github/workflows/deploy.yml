@@ -13,9 +13,7 @@ on:
         default: 'false'
   pull_request:
     branches:
-      - main
-      - new-website
-      - '**'
+      - gh-pages
   push:
     branches:
       - gh-pages
@@ -53,7 +51,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
-          destination_dir: .
+          destination_dir: docs
           keep_files: false
 
       - name: Deploy to Production (auto on gh-pages push)
@@ -62,7 +60,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
-          destination_dir: .
+          destination_dir: docs
           keep_files: false
 
       - name: Post Preview URL (for PRs)
