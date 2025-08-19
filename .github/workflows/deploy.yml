@@ -14,9 +14,6 @@ on:
   pull_request:
     branches:
       - gh-pages
-  push:
-    branches:
-      - gh-pages
 
 jobs:
   build-and-deploy:
@@ -54,14 +51,6 @@ jobs:
           destination_dir: docs
           keep_files: false
 
-      - name: Deploy to Production (auto on gh-pages push)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/gh-pages'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          destination_dir: docs
-          keep_files: false
 
       - name: Post Preview URL (for PRs)
         if: github.event_name == 'pull_request'
