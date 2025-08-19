@@ -27,9 +27,7 @@ jobs:
         with:
           ref: ${{ github.event.inputs.deploy_branch || github.head_ref || github.ref }}
 
-      - name: Remove .DS_Store files
-        run: |
-          find . -name '.DS_Store' -type f -delete
+  # Removed .DS_Store cleanup step
 
       - name: Set up Node.js (if needed)
         uses: actions/setup-node@v4
