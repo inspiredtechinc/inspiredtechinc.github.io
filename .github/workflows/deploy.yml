@@ -1,0 +1,72 @@
+name: Deploy & Preview Website
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_branch:
+        description: 'Branch, tag, or commit to deploy (e.g., main, new-website, v1.0)'
+        required: true
+        default: 'main'
+      preview:
+        description: 'Preview only (true/false)'
+        required: false
+        default: 'false'
+  pull_request:
+    branches:
+      - gh-pages
+      - main
+      - new-website
+      - '**'
+  push:
+    branches:
+      - gh-pages
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.deploy_branch || github.head_ref || github.ref }}
+
+      - name: Set up Node.js (if needed)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build site (if needed)
+        run: |
+          echo "No build step needed for static HTML."
+
+      - name: Deploy Preview (for PRs or preview mode)
+        if: github.event_name == 'pull_request' || github.event.inputs.preview == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          destination_dir: preview/${{ github.head_ref || github.event.inputs.deploy_branch }}
+          keep_files: true
+
+      - name: Deploy to Production (manual trigger)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.preview != 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          destination_dir: docs
+          keep_files: false
+
+      - name: Deploy to Production (auto on gh-pages push)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/gh-pages'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          destination_dir: docs
+          keep_files: false
+
+      - name: Post Preview URL (for PRs)
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "Preview URL: https://inspiredtechinc.github.io/preview/${{ github.head_ref }}/"
