@@ -1,9 +1,9 @@
-  =>  Template Name    : Inspired Tech - Inspired Technologies & Business Solutions Inc.
+  =>  Template Name    : Inspired Technologies - Inspired Technologies & Business Solutions Inc.
 
   =>  Template Link    : https://htmlcodex.com/artificial-intelligence-html-template
 
   =>  Template License : https://htmlcodex.com/license (or read the LICENSE.txt file)
 
-  =>  Template Author  : HTML Codex
+  =>  Template Author  : HTML Codex (credit removed under license)
 
   =>  Author Website   : https://htmlcodex.com
