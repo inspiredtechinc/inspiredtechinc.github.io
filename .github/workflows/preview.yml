@@ -29,7 +29,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./docs
-        destination_dir: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.ref_name }}
+        destination_dir: preview/${{ github.head_ref || github.event.inputs.branch || github.ref_name }}
 
     - name: Comment PR
       if: github.event_name == 'pull_request'
