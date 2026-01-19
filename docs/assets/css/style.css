@@ -2150,3 +2150,13 @@ p {
 .pb-225 {
   padding-bottom: 225px;
 }
+
+.partners-area img {
+  max-height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.partners-area a:hover img {
+  transform: scale(1.05);
+}
